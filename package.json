@@ -6,6 +6,7 @@
   "scripts": {
     "copy-lib": "copyfiles -u 1 lib/* lens_components",
     "demo": "builder run demo",
+    "webpack-demo": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "install-local": "npm run copy-lib && python setup.py install",
     "prepublish": "npm test && builder run build-dist && npm run copy-lib",
     "publish-all": "npm publish && python setup.py sdist upload",
@@ -17,16 +18,26 @@
     "uninstall-local": "pip uninstall lens-components -y"
   },
   "dependencies": {
+    "babel-loader": "^7.1.2",
     "builder": "3.2.2",
     "copyfiles": "^1.2.0",
+    "css-loader": "^0.28.10",
     "dash-components-archetype": "^0.2.11",
+    "glamor": "^2.20.40",
+    "glamorous": "^4.11.6",
+    "npm": "^5.6.0",
     "prop-types": "^15.5.9",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-select": "^1.2.1",
+    "style-loader": "^0.20.2"
   },
   "devDependencies": {
     "dash-components-archetype-dev": "^0.2.11",
     "enzyme": "^2.8.2",
-    "react-test-renderer": "^15.5.4"
+    "html-webpack-plugin": "^2.30.1",
+    "react-test-renderer": "^15.5.4",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }

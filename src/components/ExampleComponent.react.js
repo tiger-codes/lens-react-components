@@ -14,7 +14,7 @@ export default class ExampleComponent extends Component {
 
         return (
             <div id={id}>
-                ExampleComponent: {label}
+                Example component: {label}
                 <input
                     value={value}
                     onChange={e => {
