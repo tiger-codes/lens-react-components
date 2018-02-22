@@ -1,0 +1,5 @@
+include lens_components/bundle.js
+include lens_components/bundle.js.map
+include lens_components/metadata.json
+include README.md
+include LICENSE.md
