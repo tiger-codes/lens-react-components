@@ -1,61 +1,85 @@
 import React, {Component} from 'react';
 import MultiSelectField from 'react-select';
-// import {ExampleComponent} from '../src';
-import { ListView } from '../src';
+import { ListView, AddFilter } from '../src';
 import 'react-select/dist/react-select.css';
+import lensData from './lens.json';
+
+// Default selected filters for filter panel
+const defaultValue = [{
+  label: 'Meta.parent_organization',
+  value: 'parent_organization'
+},
+{
+  label: 'Meta.menopausal_status',
+  value: 'menopausal_status'
+}];
 
 class Demo extends Component {
   constructor() {
     super();
-    this.updateDataSource = this.updateDataSource.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
-    this.state = {dataSource: ['nikhil', 'romil','divya', 'jay'], selections: []};
+    this.chnageOrder = this.chnageOrder.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+
+    const dropDownData = lensData.filters.fields;
+    let dpData = [];
+    for(let prop in dropDownData) {
+      if(dropDownData.hasOwnProperty(prop)) {
+        dpData = [...dpData, ...dropDownData[prop].map((rec) => ({ label: prop.concat('.',rec), value: rec }))]
+      }
+    }
+    this.state = { filters: defaultValue, selectedOption: null, options: dpData };
   }
 
-  // handleChange(value) {
-  //   this.setState({ selectedOption });
-  // }
 
-  updateDataSource(oldIndex, newIndex) {
-    let dataSource = this.state.dataSource;
+  handleChange(value) {
+    this.setState((prev) => ({ filters:[...prev.filters, value ], selectedOption: null }));
+  }
+
+  deleteItem(index) {
+    let filters = this.state.filters;
+    filters.splice(index, 1);
+    this.setState({filters});
+  }
+
+  chnageOrder(oldIndex, newIndex) {
+    let filters = this.state.filters;
     if(newIndex < oldIndex) {
-      dataSource.splice(newIndex, 0, dataSource[oldIndex]);
-      dataSource.splice(parseInt(oldIndex)+1, 1);
+      filters.splice(newIndex, 0, filters[oldIndex]);
+      filters.splice(parseInt(oldIndex)+1, 1);
     } else if( newIndex > oldIndex) {
-      dataSource.splice(parseInt(newIndex)+1, 0, dataSource[oldIndex]);
-      dataSource.splice(oldIndex, 1);
+      filters.splice(parseInt(newIndex)+1, 0, filters[oldIndex]);
+      filters.splice(oldIndex, 1);
     }
-    this.setState({dataSource});
+    this.setState({filters});
+  }
+
+  renderItem(item) {
+    const elementType = lensData.renderObj[item.value];
+    return elementType === 'dropdown'
+    ? <MultiSelectField value={null} multiselect options={defaultValue} />
+    : <span>Range</span>
   }
 
     render() {
+      const headerElement = <AddFilter
+        placeholder="Add Filters"
+        data={this.state.options}
+        onChange={this.handleChange}
+        value={this.state.selectedOption} />;
+
         return (
             <div>
-                <h1>lens-components Demo</h1>
-                <ListView
-            dataSource={this.state.dataSource}
-            renderRow={(data) => <MultiSelectField
-              style={{width: '90%'}}
-              name="form-field-name"
-              value={{ value: data, label: data }}
-              multiselect
-              options={[
-                { value: data, label: data },
-                { value: 'two', label: 'Two' }
-              ]}
-            />}
-            // renderRow={(data) => <div style={{position: 'relative'}}><TempusDropdown defaultValue={data} options={[{value: data,label:data},{value: 'sdsa',label:'asdsa'}]} /></div>}
-            // renderRow={(data) => <DropDown options={[data,'sample']} />}
-            renderHeader={() => {}}
-            updateDataSource={this.updateDataSource}
-            moovable
-          />
-                {/* <ExampleComponent
-                    label="This is an example label"
-                    value={this.state.value}
-                    setProps={newProps => this.setState({value: newProps.value})}
-                /> */}
-                <hr/>
+              <h1>lens-components Demo</h1>
+              <ListView
+                header={headerElement}
+                dataSource={this.state.filters}
+                renderRow={this.renderItem}
+                chnageOrder={this.chnageOrder}
+                moovable
+                removable
+                deleteItem={this.deleteItem}
+              />
             </div>
         );
     }

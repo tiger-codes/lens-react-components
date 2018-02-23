@@ -1,0 +1,175 @@
+{
+    "renderObj": {
+      "parent_organization":"dropdown",
+      "project_name":"dropdown",
+      "gender":"dropdown",
+      "race":"dropdown",
+      "smoking_status": "range",
+      "menopausal_status": "range",
+      "cancer_site_name":"dropdown",
+      "cancer_name":"dropdown",
+      "cancer_site_name": "dropdown",
+      "cancer_name": "dropdown",
+      "tumor_finding": "dropdown",
+      "stage": "dropdown",
+      "t_stage": "dropdown",
+      "n_stage": "dropdown",
+      "m_stage": "dropdown",
+      "histopath_grade": "dropdown",
+      "histology": "dropdown",
+      "medication_name": "dropdown",
+      "ingredient_name": "dropdown",
+      "procedure_name": "dropdown",
+      "radiotherapy_name": "dropdown",
+      "gene_name+variant": "dropdown",
+      "sequencing_gene_name": "dropdown",
+      "lab_test+result": "dropdown",
+      "lab_test_short_name": "dropdown",
+      "adverse_event": "dropdown",
+      "comorbidity_name": "dropdown",
+      "outcome": "dropdown",
+      "follow_up_status": "dropdown",
+      "event": "dropdown",
+      "cause_of_death": "dropdown"
+
+    },
+    "security" : {
+
+        "tenants"  : [ "Tempus Labs" ],
+        "roles"    : [ "LENS_DATA_IDENTIFIED" ]
+    },
+
+    "panels" : [
+
+        "CohortFunnel",
+        "SurvivalCurves",
+        "SurvivalTree",
+        "PatientTimeline",
+        "EDAVisualizer",
+        "DataQuality",
+        "AskGene"
+    ],
+
+    "filters" : {
+
+        "layout" : [
+            "Meta",
+            "Cancer",
+            "Metastasis",
+            "Recurrence",
+            "TumorFinding",
+            "Medication",
+            "Procedure",
+            "Radiotherapy",
+            "Sequencing",
+            "LabWork",
+            "AdverseEvent",
+            "Comorbidity",
+            "TherapyOutcome",
+            "NonTherapyOutcome",
+            "Imaging",
+            "FollowUpStatus",
+            "Death"
+        ],
+
+        "fields" : {
+
+            "Meta"                  : [
+                "parent_organization",
+                "project_name",
+                "gender",
+                "race",
+                "smoking_status",
+                "menopausal_status"
+            ],
+            "Cancer"                : [
+                "cancer_site_name",
+                "cancer_name"
+            ],
+            "Metastasis"            : [
+                "cancer_name"
+            ],
+            "Recurrence"            : [
+                "cancer_site_name",
+                "cancer_name"
+            ],
+            "TumorFinding"          : [
+                "tumor_finding",
+                "stage",
+                "t_stage",
+                "n_stage",
+                "m_stage",
+                "histopath_grade",
+                "histology"
+            ],
+            "Medication"            : [
+                "medication_name",
+                "ingredient_name"
+            ],
+            "Procedure"             : [
+                "procedure_name"
+            ],
+            "Radiotherapy"          : [
+                "radiotherapy_name"
+            ],
+            "Sequencing"            : [
+                "gene_name+variant",
+                "sequencing_gene_name"
+            ],
+            "LabWork"               : [
+                "lab_test+result",
+                "lab_test_short_name"
+            ],
+            "AdverseEvent"          : [
+                "adverse_event"
+            ],
+            "Comorbidity"           : [
+                "comorbidity_name"
+            ],
+            "TherapyOutcome"        : [
+                "outcome"
+            ],
+            "NonTherapyOutcome"     : [
+                "outcome"
+            ],
+            "Imaging"               : [
+                "outcome"
+            ],
+            "FollowUpStatus"        : [
+                "follow_up_status"
+            ],
+            "Death"                 : [
+                "event",
+                "cause_of_death"
+            ]
+        }
+    },
+
+    "CohortFunnel" : {
+
+    },
+
+    "SurvivalCurves" : {
+
+    },
+
+    "SurvivalTree" : {
+
+    },
+
+    "PatientTimeline" : {
+
+    },
+
+    "EDAVisualizer" : {
+
+    },
+
+    "DataQuality" : {
+
+    },
+
+    "AskGene" : {
+
+    }
+}

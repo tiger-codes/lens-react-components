@@ -2,13 +2,13 @@ module.exports = {
   entry: './demo/index.js',
   output: {
        path:__dirname+ '/lib/',
-       filename: "bundle.js",
+       filename: 'bundle.js',
        publicPath: '/lib'
    },
   devServer: {
     inline: true,
     host: '0.0.0.0',
-    port: 9090,
+    port: 9090
   },
   module: {
     loaders: [
@@ -17,9 +17,9 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015'],
-        },
-      },
+          presets: ['react', 'es2015']
+        }
+      }
     ],
     rules: [
       {
@@ -29,8 +29,8 @@ module.exports = {
       {
       test: /\.js$/,
       exclude: /node_modules/,
-      loaders: ["babel-loader"],
+      loaders: ['babel-loader']
     }
     ]
-  },
+  }
 };
