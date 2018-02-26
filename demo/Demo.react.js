@@ -1,18 +1,42 @@
 import React, {Component} from 'react';
 import MultiSelectField from 'react-select';
+import { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import { ListView, AddFilter } from '../src';
 import 'react-select/dist/react-select.css';
 import lensData from './lens.json';
 
+const getOrderedData = function (filter) {
+  return filter.order.map((item) =>  ({
+      label: item[0].trim().concat('.', item[1].trim()),
+      filterName: item[1].trim(),
+      value: filter.filters[item[0].trim()][item[1].trim()].map(val => ({label: val, value: val}))
+    }));
+};
+const filter = {
+  filters: {
+    Meta: {
+      parent_organization: ["test"],
+      project_name: ["Tempus"],
+      gender: ["male","female"],
+      race: ["white"]
+    },
+    Cancer: {
+      cancer_site_name: ["pancreatic cancer"],
+      cancer_name: ["pancreatic cancer"]
+    }
+  },
+  order: [
+      ["Meta", "parent_organization"],
+      ["Meta", "project_name "],
+      ["Meta ", "gender "],
+      ["Meta ", "race "],
+      ["Cancer ", "cancer_site_name "],
+      ["Cancer ", "cancer_name "]
+    ]
+  };
 // Default selected filters for filter panel
-const defaultValue = [{
-  label: 'Meta.parent_organization',
-  value: 'parent_organization'
-},
-{
-  label: 'Meta.menopausal_status',
-  value: 'menopausal_status'
-}];
+const defaultValue = getOrderedData(filter);
 
 class Demo extends Component {
   constructor() {
@@ -31,7 +55,6 @@ class Demo extends Component {
     this.state = { filters: defaultValue, selectedOption: null, options: dpData };
   }
 
-
   handleChange(value) {
     this.setState((prev) => ({ filters:[...prev.filters, value ], selectedOption: null }));
   }
@@ -44,6 +67,7 @@ class Demo extends Component {
 
   chnageOrder(oldIndex, newIndex) {
     let filters = this.state.filters;
+      //update order of this array in the filters[oldIndex].label.split('.')
     if(newIndex < oldIndex) {
       filters.splice(newIndex, 0, filters[oldIndex]);
       filters.splice(parseInt(oldIndex)+1, 1);
@@ -55,10 +79,11 @@ class Demo extends Component {
   }
 
   renderItem(item) {
-    const elementType = lensData.renderObj[item.value];
+    const elementType = lensData.renderObj[item.filterName];
+    console.log('dropdown', item.value);
     return elementType === 'dropdown'
-    ? <MultiSelectField value={null} multiselect options={defaultValue} />
-    : <span>Range</span>
+    ? <MultiSelectField multi value={item.value} multiselect options={item.value} />
+    : <Range />
   }
 
     render() {
@@ -70,7 +95,7 @@ class Demo extends Component {
 
         return (
             <div>
-              <h1>lens-components Demo</h1>
+              <h1>Lens Components Demo</h1>
               <ListView
                 header={headerElement}
                 dataSource={this.state.filters}

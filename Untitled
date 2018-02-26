@@ -1,0 +1,39 @@
+const filter = {
+  filters: {
+    Meta: {
+      parent_organization: ["test"],
+      project_name: ["Tempus"],
+      gender: ["male"],
+      race: ["white"]
+    },
+    Cancer: {
+      cancer_site_name: ["pancreatic cancer"],
+      cancer_name: ["pancreatic cancer"]
+    }
+  },
+  order: [
+      ["Meta", "parent_organization"],
+      ["Meta", "project_name "],
+      ["Meta ", "gender "],
+      ["Meta ", "race "],
+      ["Cancer ", "cancer_site_name "],
+      ["Cancer ", "cancer_name "]
+    ]
+  };
+
+
+
+        const getOrderedData = function(filter) {
+
+          const res = filter.order.map((item) => {
+            console.log(filter.filters[item[0]][item[1]);
+            return ({
+            label: item[0].concat('.', item[1]),
+            filterName: item[1],
+            value: filter.filters[item[0]][item[1]
+          })});
+          console.log(JSON.stringify(res, null, 2));
+          return res;
+        }
+
+        getOrderedData(filter)
